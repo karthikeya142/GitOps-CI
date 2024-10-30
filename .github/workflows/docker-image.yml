@@ -26,10 +26,10 @@ jobs:
     - name: docker status
       run: docker ps -a -s
 
-    # - name: Clean Up
-    #   run: |
-    #     docker stop shop
-    #     docker rm shop
+    - name: Clean Up
+      run: |
+        docker stop shop
+        docker rm shop
 
     - name: publicip
       run: curl ifconfig.me
