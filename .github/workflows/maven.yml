@@ -41,6 +41,17 @@ jobs:
     - name: Package with Maven
       run: mvn clean package -DskipTests=true
 
+    - name: Log in to Docker Hub
+      run: echo "Karthik@142" | docker login -u "karthik142" --password-stdin
+
+    - name: Build Docker Image
+      run: |
+        docker build -t karthik142/shopping-cart:latest -f docker/Dockerfile .  # Adjust the image name as needed
+
+    - name: Push Docker Image to Docker Hub
+      run: |
+        docker push karthik142/shopping-cart:latest  
+
     # - name: Run OWASP Dependency-Check
     #   run: |
     #     mvn org.owasp:dependency-check-maven:check \
@@ -71,15 +82,4 @@ jobs:
     #                   -Dsonar.java.binaries=target/classes \
     #                   -Dsonar.host.url=http://3.21.97.87:9000/ \
     #                   -Dsonar.login=squ_210c03bc7949abd1151aa9bb72f8f4f86d197978
-
-    - name: Log in to Docker Hub
-      run: echo "Karthik@142" | docker login -u "karthik142" --password-stdin
-
-    - name: Build Docker Image
-      run: |
-        docker build -t karthik142/shopping-cart:latest -f docker/Dockerfile .  # Adjust the image name as needed
-
-    - name: Push Docker Image to Docker Hub
-      run: |
-        docker push karthik142/shopping-cart:latest  
       
