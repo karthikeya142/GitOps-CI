@@ -18,6 +18,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    # Set environment variables to disable debug logs
+    env:
+      ACTIONS_RUNNER_DEBUG: false
+      ACTIONS_STEP_DEBUG: false
+
 
     steps:
     - uses: actions/checkout@v4
@@ -49,23 +54,23 @@ jobs:
     #     path: target/dependency-check-report/*.xml
 
 
-    - name: Install SonarQube Scanner
-      run: |
-        wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip -O sonar-scanner.zip
-        unzip sonar-scanner.zip -d /opt
-        echo "/opt/sonar-scanner-4.6.2.2472-linux/bin" >> $GITHUB_PATH
+    # - name: Install SonarQube Scanner
+    #   run: |
+    #     wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip -O sonar-scanner.zip
+    #     unzip sonar-scanner.zip -d /opt
+    #     echo "/opt/sonar-scanner-4.6.2.2472-linux/bin" >> $GITHUB_PATH
 
-    - name: Run SonarQube Analysis
-      env:
-        SONAR_TOKEN: squ_210c03bc7949abd1151aa9bb72f8f4f86d197978 # Store your token in GitHub Secrets
-        SONAR_HOST_URL: "http://3.21.97.87:9000/"
-      run: |
-        sonar-scanner -Dsonar.projectKey=GitOps-CI \
-                      -Dsonar.projectName=GitOps-CI \
-                      -Dsonar.sources=. \
-                      -Dsonar.java.binaries=target/classes \
-                      -Dsonar.host.url=http://3.21.97.87:9000/ \
-                      -Dsonar.login=squ_210c03bc7949abd1151aa9bb72f8f4f86d197978
+    # - name: Run SonarQube Analysis
+    #   env:
+    #     SONAR_TOKEN: squ_210c03bc7949abd1151aa9bb72f8f4f86d197978 # Store your token in GitHub Secrets
+    #     SONAR_HOST_URL: "http://3.21.97.87:9000/"
+    #   run: |
+    #     sonar-scanner -Dsonar.projectKey=GitOps-CI \
+    #                   -Dsonar.projectName=GitOps-CI \
+    #                   -Dsonar.sources=. \
+    #                   -Dsonar.java.binaries=target/classes \
+    #                   -Dsonar.host.url=http://3.21.97.87:9000/ \
+    #                   -Dsonar.login=squ_210c03bc7949abd1151aa9bb72f8f4f86d197978
 
     - name: Log in to Docker Hub
       run: echo "Karthik@142" | docker login -u "karthik142" --password-stdin
